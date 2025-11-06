@@ -6,6 +6,7 @@ import openai
 from PIL import Image
 import paho.mqtt.client as mqtt
 import json
+import time
 
 # Function to encode the image to base64
 def encode_image(image_file):
@@ -19,13 +20,19 @@ def send_mqtt_message(topic, message):
         port = 1883
         
         # Crear cliente MQTT
-        client = mqtt.Client()
+        client = mqtt.Client(client_id="streamlit_image_analyzer")
         
         # Conectar al broker
         client.connect(broker, port, 60)
         
+        # Dar tiempo para establecer conexión
+        time.sleep(1)
+        
         # Publicar mensaje
-        client.publish(topic, message)
+        client.publish(topic, message, qos=1)
+        
+        # Dar tiempo para que se envíe el mensaje
+        time.sleep(1)
         
         # Desconectar
         client.disconnect()
@@ -38,8 +45,8 @@ def send_mqtt_message(topic, message):
 st.set_page_config(page_title="Analisis de imagen", layout="centered", initial_sidebar_state="collapsed")
 # Streamlit page setup
 st.title("Análisis de Imagen:🤖🏞️")
-#image = Image.open('OIG4.jpg')
-#st.image(image, width=350)
+image = Image.open('OIG4.jpg')
+st.image(image, width=350)
 
 with st.sidebar:
     st.subheader("Este Agente analiza el contenido de la imagen y responde tus preguntas.")
