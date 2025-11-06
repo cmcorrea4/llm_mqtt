@@ -38,8 +38,8 @@ def send_mqtt_message(topic, message):
 st.set_page_config(page_title="Analisis de imagen", layout="centered", initial_sidebar_state="collapsed")
 # Streamlit page setup
 st.title("Análisis de Imagen:🤖🏞️")
-image = Image.open('OIG4.jpg')
-st.image(image, width=350)
+#image = Image.open('OIG4.jpg')
+#st.image(image, width=350)
 
 with st.sidebar:
     st.subheader("Este Agente analiza el contenido de la imagen y responde tus preguntas.")
